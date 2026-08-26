@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Coding Club — Certificate Verification Portal</title>
+	<link rel="stylesheet" href="style.css">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
+		rel="stylesheet">
+	<base target="_blank">
+</head>
+
+<body>
+
+	<!-- ==================== HEADER ==================== -->
+	<header class="site-header">
+		<div class="header-inner">
+			<div class="brand">
+				<svg class="brand-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+					<path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
+				</svg>
+				<span class="brand-name">DCODE CLUB</span>
+			</div>
+			<div class="header-logos">
+				<img src="assets/logo1.png" alt="Partner Logo 1">
+				<img src="assets/logo2.png" alt="Partner Logo 2">
+				<img src="assets/logo3.png" alt="Partner Logo 3">
+			</div>
+		</div>
+	</header>
+
+	<!-- ==================== HERO / VERIFICATION ==================== -->
+	<main>
+		<section class="hero" id="verify">
+			<div class="hero-inner">
+
+				<!-- Left scattered certificates -->
+				<aside class="scatter-side scatter-left" aria-hidden="true">
+					<div class="cert-card cert-l1" data-id="CC-2025-DEV-8492">
+						<div class="cert-img-wrap">
+							<!-- Replace src with your real certificate image -->
+							<img src="assets/devcraft.jpg" alt="DevCraft Hackathon 2025"
+								loading="lazy">
+							<div class="cert-img-fallback">
+								<span class="cert-fallback-seal">★</span>
+								<div class="cert-fallback-lines">
+									<div class="cert-fallback-line"></div>
+									<div class="cert-fallback-line short"></div>
+								</div>
+								<span class="cert-fallback-id">CC-2025-DEV-8492</span>
+							</div>
+						</div>
+					</div>
+					<div class="cert-card cert-l2" data-id="CC-2024-ALGO-1044">
+						<div class="cert-img-wrap">
+							<img src="assets/cert-algo.jpg" alt="Algorithmic Design 2024"
+								loading="lazy">
+							<div class="cert-img-fallback">
+								<span class="cert-fallback-seal">★</span>
+								<div class="cert-fallback-lines">
+									<div class="cert-fallback-line"></div>
+									<div class="cert-fallback-line short"></div>
+								</div>
+								<span class="cert-fallback-id">CC-2024-ALGO-1044</span>
+							</div>
+						</div>
+					</div>
+					<div class="cert-card cert-l3" data-id="CC-2024-RUST-7721">
+						<div class="cert-img-wrap">
+							<img src="assets/cert-rust.jpg" alt="Rust Masterclass 2024"
+								loading="lazy">
+							<div class="cert-img-fallback">
+								<span class="cert-fallback-seal">★</span>
+								<div class="cert-fallback-lines">
+									<div class="cert-fallback-line"></div>
+									<div class="cert-fallback-line short"></div>
+								</div>
+								<span class="cert-fallback-id">CC-2024-RUST-7721</span>
+							</div>
+						</div>
+					</div>
+				</aside>
+
+				<!-- Center verification engine -->
+				<div class="verify-engine">
+					<div class="verify-card">
+						<div class="verify-badge">
+							<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+								<path fill-rule="evenodd" clip-rule="evenodd"
+									d="M17 3.8H7C5.785 3.8 4.8 4.785 4.8 6v9.765c0 .809.444 1.553 1.157 1.936l5 2.693a2 2 0 0 0 1.886 0l5-2.693c.713-.383 1.157-1.127 1.157-1.936V6c0-1.215-.985-2.2-2.2-2.2H7ZM7 2C4.79 2 3 3.79 3 6v9.765c0 1.471.808 2.824 2.104 3.521l5 2.693a4 4 0 0 0 3.792 0l5-2.693C20.192 18.59 21 17.236 21 15.765V6c0-2.21-1.79-4-4-4H7Z" />
+								<path fill-rule="evenodd" clip-rule="evenodd"
+									d="M16.725 8.63a1 1 0 0 1 0 1.415l-4.962 4.962a1 1 0 0 1-1.414 0l-2.672-2.671a1 1 0 1 1 1.415-1.415l1.914 1.914 4.305-4.305a1 1 0 0 1 1.414 0Z" />
+							</svg>
+						</div>
+						<h1 class="verify-title">Certificate Verification</h1>
+						<p class="verify-subtitle">Enter a certificate ID or scan a QR code to
+							verify authenticity.</p>
+
+						<div class="search-box">
+							<div class="search-input-wrap">
+								<svg class="search-icon" viewBox="0 0 24 24"
+									fill="currentColor" aria-hidden="true">
+									<path
+										d="M11.5 3a8.5 8.5 0 1 0 0 17 8.5 8.5 0 0 0 0-17ZM3 11.5a8.5 8.5 0 1 1 17 0 8.5 8.5 0 0 1-17 0Z" />
+									<path
+										d="M16.243 16.243a1 1 0 0 1 1.414 0l4.3 4.3a1 1 0 0 1-1.414 1.414l-4.3-4.3a1 1 0 0 1 0-1.414Z" />
+								</svg>
+								<input type="text" id="certInput" class="search-input"
+									placeholder="e.g. CC-2025-DEV-8492"
+									autocomplete="off" spellcheck="false">
+							</div>
+							<button id="verifyBtn" class="search-btn" type="button">
+								<span>Verify</span>
+							</button>
+						</div>
+
+						<div class="quick-pills">
+							<span class="pills-label">Quick test:</span>
+							<button class="pill" data-id="CC-2025-DEV-8492"
+								type="button">CC-2025-DEV-8492</button>
+							<button class="pill" data-id="CC-2024-ALGO-1044"
+								type="button">CC-2024-ALGO-1044</button>
+							<button class="pill" data-id="CC-2025-WEB3-3019"
+								type="button">CC-2025-WEB3-3019</button>
+							<button class="pill pill--invalid" data-id="INVALID-999"
+								type="button">Invalid sample</button>
+						</div>
+
+						<!-- Result area -->
+						<div id="resultArea" class="result-area hidden" aria-live="polite">
+						</div>
+					</div>
+				</div>
+
+				<!-- Right scattered certificates -->
+				<aside class="scatter-side scatter-right" aria-hidden="true">
+					<div class="cert-card cert-r1" data-id="CC-2025-WEB3-3019">
+						<div class="cert-img-wrap">
+							<img src="assets/cert-web3.jpg" alt="Web3 Security 2025"
+								loading="lazy">
+							<div class="cert-img-fallback">
+								<span class="cert-fallback-seal">★</span>
+								<div class="cert-fallback-lines">
+									<div class="cert-fallback-line"></div>
+									<div class="cert-fallback-line short"></div>
+								</div>
+								<span class="cert-fallback-id">CC-2025-WEB3-3019</span>
+							</div>
+						</div>
+					</div>
+					<div class="cert-card cert-r2" data-id="CC-2025-AI-9012">
+						<div class="cert-img-wrap">
+							<img src="assets/cert-ai.jpg" alt="AI Sprint 2025"
+								loading="lazy">
+							<div class="cert-img-fallback">
+								<span class="cert-fallback-seal">★</span>
+								<div class="cert-fallback-lines">
+									<div class="cert-fallback-line"></div>
+									<div class="cert-fallback-line short"></div>
+								</div>
+								<span class="cert-fallback-id">CC-2025-AI-9012</span>
+							</div>
+						</div>
+					</div>
+					<div class="cert-card cert-r3" data-id="CC-2024-OSS-4433">
+						<div class="cert-img-wrap">
+							<img src="assets/cert-oss.jpg" alt="Open Source Fellowship 2024"
+								loading="lazy">
+							<div class="cert-img-fallback">
+								<span class="cert-fallback-seal">★</span>
+								<div class="cert-fallback-lines">
+									<div class="cert-fallback-line"></div>
+									<div class="cert-fallback-line short"></div>
+								</div>
+								<span class="cert-fallback-id">CC-2024-OSS-4433</span>
+							</div>
+						</div>
+					</div>
+				</aside>
+
+			</div>
+		</section>
+
+		<!-- ==================== LOYALTY / PERKS ==================== -->
+		<!-- <section class="perks-section" id="perks"> -->
+		<!-- 	<div class="section-inner"> -->
+		<!-- 		<div class="section-header"> -->
+		<!-- 			<h2>Frequent Crowd Perks</h2> -->
+		<!-- 			<p>Attend more events to unlock exclusive club benefits and discounts.</p> -->
+		<!-- 		</div> -->
+		<!-- 		<div class="tiers-grid"> -->
+		<!-- 			<article class="tier-card"> -->
+		<!-- 				<div class="tier-ribbon tier-ribbon--bronze"></div> -->
+		<!-- 				<div class="tier-icon">🏗️</div> -->
+		<!-- 				<h3 class="tier-name">Bronze Builder</h3> -->
+		<!-- 				<p class="tier-range">1–2 events attended</p> -->
+		<!-- 				<ul class="tier-benefits"> -->
+		<!-- 					<li>Certificate verification</li> -->
+		<!-- 					<li>Digital badge on profile</li> -->
+		<!-- 					<li>Event notifications</li> -->
+		<!-- 				</ul> -->
+		<!-- 			</article> -->
+		<!-- 			<article class="tier-card tier-card--featured"> -->
+		<!-- 				<div class="tier-ribbon tier-ribbon--silver"></div> -->
+		<!-- 				<div class="tier-icon">⚙️</div> -->
+		<!-- 				<h3 class="tier-name">Silver Contributor</h3> -->
+		<!-- 				<p class="tier-range">3–5 events attended</p> -->
+		<!-- 				<ul class="tier-benefits"> -->
+		<!-- 					<li>10% workshop discount</li> -->
+		<!-- 					<li>Priority registration</li> -->
+		<!-- 					<li>Exclusive Discord channel</li> -->
+		<!-- 				</ul> -->
+		<!-- 			</article> -->
+		<!-- 			<article class="tier-card"> -->
+		<!-- 				<div class="tier-ribbon tier-ribbon--gold"></div> -->
+		<!-- 				<div class="tier-icon">👑</div> -->
+		<!-- 				<h3 class="tier-name">Gold Architect</h3> -->
+		<!-- 				<p class="tier-range">6+ events attended</p> -->
+		<!-- 				<ul class="tier-benefits"> -->
+		<!-- 					<li>20% bootcamp discount</li> -->
+		<!-- 					<li>1:1 mentorship sessions</li> -->
+		<!-- 					<li>Speaker opportunities</li> -->
+		<!-- 				</ul> -->
+		<!-- 			</article> -->
+		<!-- 		</div> -->
+		<!-- 	</div> -->
+		<!-- </section> -->
+		<!---->
+		<!-- ==================== ABOUT / FOOTER ==================== -->
+		<section class="about-section" id="about">
+			<div class="section-inner">
+				<div class="about-grid">
+					<div class="about-block">
+						<h3>How it works</h3>
+						<p>Every certificate issued by Coding Club carries a unique
+							cryptographic ID. When you enter an ID, our system checks it
+							against the Supabase-backed registry in real time.</p>
+					</div>
+					<div class="about-block">
+						<h3>Security</h3>
+						<p>Each certificate is SHA-256 signed. The verification portal is
+							read-only — no private data is exposed beyond what is printed on
+							the certificate itself.</p>
+					</div>
+					<div class="about-block">
+						<h3>Need help?</h3>
+						<p>If a valid certificate shows as invalid, contact us at <a
+								href="mailto:certificates@codingclub.dev">certificates@codingclub.dev</a>
+							with the certificate ID.</p>
+					</div>
+				</div>
+				<footer class="site-footer">
+					<p>© 2025 Coding Club. All rights reserved. Verification powered by Supabase.
+					</p>
+				</footer>
+			</div>
+		</section>
+	</main>
+	<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+	<script src="app.js"></script>
+</body>
+
+</html>
