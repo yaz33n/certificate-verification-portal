@@ -40,7 +40,7 @@ const DEMO_REGISTRY = {
 		date: "2025-03-15",
 		issuer: "Coding Club HQ",
 		skills: ["React", "Node.js", "MongoDB", "Docker"],
-		checksum: "a3f7c9d2e1b8...e2d1",
+		checksum: "a3f7c9d2e1b8c4d5e6f7g8h9i0j1k2l3m4n5o6p7q8r9s0t1u2v3w4x5y6z7e2d1",
 		perk: "20% discount on bootcamps and workshops",
 		tier: "Gold Architect",
 		events_attended: 7
@@ -138,9 +138,8 @@ async function verify(certId) {
 		verifyLocal(certId);
 	}
 }
-
 // ============================================================
-// SUPABASE VERIFICATION
+// SUPABASE VERIFICATION (updated for generator schema)
 // ============================================================
 async function verifyWithSupabase(certId) {
 	try {
@@ -156,14 +155,37 @@ async function verifyWithSupabase(certId) {
 			return;
 		}
 
+		// Map database schema to the format expected by renderValid
+		const mapped = {
+			name: data.name,
+			event: data.event,
+			date: data.date || data.issue_date || data.event_date,
+			issuer: data.issuer || 'Coding Club HQ',
+			skills: Array.isArray(data.skills) ? data.skills : (data.skills ? data.skills.split(',').map(s => s.trim()) : []),
+			checksum: data.checksum || 'N/A',
+			tier: data.tier || 'Bronze Builder',
+			events_attended: data.events_attended || 1,
+			perk: getPerkForTier(data.tier),
+			image_path: data.image_path,
+			emailed: data.emailed,
+		};
+
 		console.log('[CertPortal] Supabase match found:', data.name);
-		renderValid(certId, data);
+		renderValid(certId, mapped);
 	} catch (err) {
 		console.error('[CertPortal] Supabase query failed:', err);
 		console.log('[CertPortal] Falling back to local registry.');
 		verifyLocal(certId);
 	}
 }
+
+// Add this helper function
+function getPerkForTier(tier) {
+	if (tier === 'Gold Architect') return '20% discount on bootcamps and workshops';
+	if (tier === 'Silver Contributor') return '10% discount on next workshop';
+	return null;
+}
+
 
 // ============================================================
 // LOCAL VERIFICATION (offline fallback)
@@ -362,4 +384,3 @@ s.textContent = `
 document.head.appendChild(s);
 
 console.log('[CertPortal] App initialized. Mode:', useSupabase ? 'Supabase' : 'LOCAL DEMO');
-
