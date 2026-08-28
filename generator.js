@@ -91,7 +91,7 @@ const els = {
 function initAuth() {
 	testFirestoreConnection();
 
-	// Auth state change listener
+	// Firebase Google Auth state change listener
 	subscribeToAuth((user) => {
 		state.currentUser = user;
 		if (user) {
@@ -120,6 +120,8 @@ function initAuth() {
 	if (authEls.sessionSignOutBtn) {
 		authEls.sessionSignOutBtn.addEventListener('click', async () => {
 			await logoutUser();
+			state.currentUser = null;
+			renderUnauthenticatedUI();
 			showToast('Signed out successfully.');
 		});
 	}

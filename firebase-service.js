@@ -16,21 +16,20 @@ import {
   getDocFromServer 
 } from 'https://www.gstatic.com/firebasejs/11.4.0/firebase-firestore.js';
 
-// Configuration
+// Configuration - User's Personal Firebase Project (dcode-portal)
 export const firebaseConfig = {
-  projectId: "giga-phosphene-pthv3",
-  appId: "1:979625951596:web:ceb3f49c96e627da903349",
-  apiKey: "AIzaSyBbHfUGoGdVJeqRWFy7FFDavo0ttluSN78",
-  authDomain: "giga-phosphene-pthv3.firebaseapp.com",
-  firestoreDatabaseId: "ai-studio-certificateverif-2c5b77ed-d8f5-491d-8487-7af6dd599c4d",
-  storageBucket: "giga-phosphene-pthv3.firebasestorage.app",
-  messagingSenderId: "979625951596",
-  oAuthClientId: "979625951596-dm6ii3t5k16momifacbusctht9ckqtv1.apps.googleusercontent.com"
+  apiKey: "AIzaSyBIvN32VNbXhmB9MA-cRS_fWtb8vm3SoUU",
+  authDomain: "dcode-portal.firebaseapp.com",
+  projectId: "dcode-portal",
+  storageBucket: "dcode-portal.firebasestorage.app",
+  messagingSenderId: "132083017279",
+  appId: "1:132083017279:web:1f56b886703a72f088ba8a",
+  measurementId: "G-7SJ5W1RX0H"
 };
 
 const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
-export const db = getFirestore(app, firebaseConfig.firestoreDatabaseId);
+export const db = getFirestore(app);
 
 const googleProvider = new GoogleAuthProvider();
 googleProvider.setCustomParameters({ prompt: 'select_account' });

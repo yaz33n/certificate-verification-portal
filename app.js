@@ -1,7 +1,9 @@
 /**
  * DCODE CLUB — Certificate Verification Portal
- * Backend: Supabase (with offline fallback)
+ * Backend: Firestore & Supabase with Local Registry Fallback
  */
+import { db } from './firebase-service.js';
+import { doc, getDoc } from 'https://www.gstatic.com/firebasejs/11.4.0/firebase-firestore.js';
 
 // ============================================================
 // SUPABASE SETUP — Safe initialization
@@ -12,22 +14,15 @@ let useSupabase = false;
 try {
 	// Check if Supabase library loaded from CDN
 	if (typeof supabase !== 'undefined' && supabase.createClient) {
-		const SUPABASE_URL = 'https://djlbzjrvnepvqqgrsnoe.supabase.co';      // <-- REPLACE THIS
-		const SUPABASE_ANON_KEY = 'sb_publishable_95TepBpQ5wBB5NiLy11aeQ_iuMILNev';                     // <-- REPLACE THIS
+		const SUPABASE_URL = 'https://nxmtyxbjpknpltsvetjh.supabase.co';
+		const SUPABASE_ANON_KEY = 'sb_publishable_vKR9jXVpYxIr5CpuaIfnuQ_f2_mvqpl';
 
-		if (SUPABASE_URL.includes('your-project')) {
-			console.warn('[CertPortal] Supabase URL not configured yet. Running in LOCAL DEMO mode.');
-		} else {
-			supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-			useSupabase = true;
-			console.log('[CertPortal] Supabase connected.');
-		}
-	} else {
-		console.warn('[CertPortal] Supabase CDN not loaded. Running in LOCAL DEMO mode.');
+		supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+		useSupabase = true;
+		console.log('[CertPortal] Supabase connected.');
 	}
 } catch (err) {
-	console.error('[CertPortal] Supabase init failed:', err);
-	console.warn('[CertPortal] Falling back to LOCAL DEMO mode.');
+	console.warn('[CertPortal] Supabase init notice:', err);
 }
 
 // ============================================================
@@ -143,12 +138,40 @@ async function verify(certId) {
   `;
 	resultArea.classList.remove('hidden');
 
+	// 1. Try Firebase Firestore
+	if (db) {
+		try {
+			const docRef = doc(db, 'certificates', certId);
+			const docSnap = await getDoc(docRef);
+			if (docSnap.exists()) {
+				const data = docSnap.data();
+				console.log('[CertPortal] Firestore match found:', data.name);
+				renderValid(certId, {
+					name: data.name,
+					event: data.event,
+					date: data.date,
+					issuer: data.issuer || 'DCODE Club HQ',
+					skills: Array.isArray(data.skills) ? data.skills : (data.skills ? data.skills.split(',').map(s => s.trim()) : []),
+					checksum: data.checksum || 'N/A',
+					tier: data.role || data.tier || 'Participant',
+					perk: getPerkForTier(data.role || data.tier)
+				});
+				return;
+			}
+		} catch (err) {
+			console.warn('[CertPortal] Firestore check notice:', err);
+		}
+	}
+
+	// 2. Try Supabase
 	if (useSupabase && supabaseClient) {
 		await verifyWithSupabase(certId);
-	} else {
-		console.log('[CertPortal] Using local demo registry.');
-		verifyLocal(certId);
+		return;
 	}
+
+	// 3. Try Local Registry
+	console.log('[CertPortal] Using local demo registry.');
+	verifyLocal(certId);
 }
 // ============================================================
 // SUPABASE VERIFICATION (updated for generator schema)
