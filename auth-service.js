@@ -5,36 +5,36 @@
 
 export const AUTHORIZED_ADMINS = [
   {
-    id: 'admin',
-    name: 'DCODE Super Admin',
-    role: 'Club Administrator & System Owner',
-    email: 'admin@dcode.club',
-    // SHA-256 for: "dcode@2025"
-    passHash: '433767c9c0c8ff3d85bc97f39ca2fc7636e2f1ea38ec05db518f830386cfdb82'
+    id: 'yaseen',
+    name: 'Yaseen Khan',
+    role: 'Technical Lead & System Architect',
+    email: 'ysnhun412@gmail.com',
+    // 4-word passphrase: "quantum falcon cyber vault"
+    passHash: '97c0e50bfebb439431365667ec81510e225cf2900083932665c620291562a7b0'
   },
   {
     id: 'asif',
     name: 'Syed Asif',
     role: 'DCODE President & Lead Organizer',
     email: 'syedasif111005@gmail.com',
-    // SHA-256 for: "asif@dcode2025"
-    passHash: '5e7090886da13a778c4a452ef95188f62fae8477d9c66914b43d2207b5a864aa'
+    // 4-word passphrase: "galaxy phoenix orbit shield"
+    passHash: '1087a3d2b8e8f8c596da518fc85368032ec265fc01f187d12cdf67eebc6232f0'
   },
   {
     id: 'sanjivani',
     name: 'Sanjivani Jadhav',
     role: 'Faculty Coordinator / Co-Lead',
     email: 'sanjivani.jadhav.cs@gmail.com',
-    // SHA-256 for: "ssiems@2025"
-    passHash: '8b456cf7b6bc303b7fa57929dcfd6bc9f000b05b821415df2e0faaa1f52b757e'
+    // 4-word passphrase: "solar blossom vertex code"
+    passHash: 'eeabd19880016ee8bc302969e2dc07358800ebce492e0a76be3a378d0b28541f'
   },
   {
-    id: 'yaseen',
-    name: 'Yaseen Khan',
-    role: 'Technical Lead & System Architect',
-    email: 'ysnhun412@gmail.com',
-    // SHA-256 for: "yaseen@dcode"
-    passHash: '4db59aeb9f27d53b26c7104a3caea41bdf0d0b074a383d6a2a07c086d34e9e04'
+    id: 'sanjivni', // alias support for requested spelling "sanjivni"
+    name: 'Sanjivani Jadhav',
+    role: 'Faculty Coordinator / Co-Lead',
+    email: 'sanjivani.jadhav.cs@gmail.com',
+    // 4-word passphrase: "solar blossom vertex code"
+    passHash: 'eeabd19880016ee8bc302969e2dc07358800ebce492e0a76be3a378d0b28541f'
   }
 ];
 
