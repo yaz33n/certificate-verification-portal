@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>DCODE CLUB — Certificate Generator</title>
+	<link rel="stylesheet" href="style.css">
+	<link rel="stylesheet" href="generator.css">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+		rel="stylesheet">
+</head>
+
+<body>
+
+	<!-- Header -->
+	<header class="site-header">
+		<div class="header-inner">
+			<div class="brand">
+				<svg class="brand-icon" viewBox="0 0 24 24" fill="currentColor">
+					<path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
+				</svg>
+				<span class="brand-name">DCODE CLUB</span>
+			</div>
+			<nav class="header-nav">
+				<a href="index.html">Verify</a>
+				<a href="generator.html" class="active">Generate</a>
+			</nav>
+		</div>
+	</header>
+
+	<main class="gen-main">
+		<div class="gen-inner">
+
+			<!-- STEP 1: Template & Layout -->
+			<section class="gen-section">
+				<div class="gen-section-header">
+					<span class="gen-step-num">1</span>
+					<div>
+						<h2>Template & Layout</h2>
+						<p>Upload your certificate image and position text fields.</p>
+					</div>
+				</div>
+
+				<div class="gen-layout">
+					<!-- Left: Controls -->
+					<div class="gen-controls">
+						<div class="control-group">
+							<label>Certificate Template</label>
+							<input type="file" id="templateUpload" accept="image/*"
+								class="file-input">
+							<p class="hint">Upload a high-res PNG/JPG. Recommended:
+								1920×1350 or higher.</p>
+						</div>
+
+						<div class="control-group">
+							<label>Active Field</label>
+							<select id="fieldSelect" class="gen-select">
+								<option value="name">Recipient Name</option>
+								<option value="event">Event Name</option>
+								<option value="date">Date</option>
+							</select>
+							<!-- ADD THIS LINE -->
+							<option value="certId">Certificate ID</option>
+							</select>
+							<p class="hint">Select a field, then click on the
+								preview to
+								position it.</p>
+						</div>
+
+						<div class="field-props" id="fieldProps">
+							<div class="prop-row">
+								<div class="prop">
+									<label>Font Size</label>
+									<input type="number" id="propSize"
+										class="gen-input" min="8" max="120">
+								</div>
+								<div class="prop">
+									<label>Color</label>
+									<input type="color" id="propColor"
+										class="gen-input color-input">
+								</div>
+							</div>
+							<div class="prop-row">
+								<div class="prop">
+									<label>Align</label>
+									<select id="propAlign" class="gen-select">
+										<option value="left">Left</option>
+										<option value="center">Center</option>
+										<option value="right">Right</option>
+									</select>
+								</div>
+								<div class="prop">
+									<label>Weight</label>
+									<select id="propWeight" class="gen-select">
+										<option value="400">Normal</option>
+										<option value="500">Medium</option>
+										<option value="600">SemiBold</option>
+										</option value="700">Bold</option>
+									</select>
+								</div>
+							</div>
+							<div class="prop-row coords">
+								<div class="prop">
+									<label>X (%)</label>
+									<input type="number" id="propX"
+										class="gen-input" min="0" max="100"
+										step="0.1">
+								</div>
+								<div class="prop">
+									<label>Y (%)</label>
+									<input type="number" id="propY"
+										class="gen-input" min="0" max="100"
+										step="0.1">
+								</div>
+							</div>
+						</div>
+
+						<div class="control-group">
+							<label>EmailJS Config (optional)</label>
+							<input type="text" id="emailjsKey" class="gen-input"
+								placeholder="Public Key">
+							<input type="text" id="emailjsService" class="gen-input"
+								placeholder="Service ID">
+							<input type="text" id="emailjsTemplate" class="gen-input"
+								placeholder="Template ID">
+							<p class="hint">Required only if emailing from browser. See
+								setup guide.</p>
+						</div>
+					</div>
+
+					<!-- Right: Preview -->
+					<div class="gen-preview-wrap">
+						<div class="preview-header">
+							<span class="preview-label">Live Preview</span>
+							<span class="preview-badge" id="previewBadge">Click image to
+								place field</span>
+						</div>
+						<div class="canvas-container" id="canvasContainer">
+							<canvas id="previewCanvas"></canvas>
+							<div class="canvas-overlay" id="canvasOverlay"></div>
+						</div>
+						<div class="preview-actions">
+							<button class="action-btn secondary" id="resetFieldsBtn"
+								type="button">Reset to Defaults</button>
+							<button class="action-btn secondary" id="testPreviewBtn"
+								type="button">Test with Sample Data</button>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<!-- STEP 2: Event & Participants -->
+			<section class="gen-section">
+				<div class="gen-section-header">
+					<span class="gen-step-num">2</span>
+					<div>
+						<h2>Event & Participants</h2>
+						<p>Enter event details and paste your attendee list.</p>
+					</div>
+				</div>
+
+				<div class="gen-layout two-col">
+					<div class="gen-controls">
+						<div class="control-group">
+							<label>Event Name</label>
+							<input type="text" id="eventName" class="gen-input"
+								value="The ASIF Talks - Live Episode #1">
+						</div>
+						<div class="prop-row">
+							<div class="prop">
+								<label>Event Code</label>
+								<input type="text" id="eventCode" class="gen-input"
+									value="ASIF" maxlength="6">
+							</div>
+							<div class="prop">
+								<label>Event Date</label>
+								<input type="date" id="eventDate" class="gen-input"
+									value="2025-03-15">
+							</div>
+						</div>
+						<div class="control-group">
+							<label>Skills / Tags (comma separated)</label>
+							<input type="text" id="eventSkills" class="gen-input"
+								value="Leadership, Governance, Youth Dialogue">
+						</div>
+						<div class="control-group">
+							<label>Default Tier</label>
+							<select id="eventTier" class="gen-select">
+								<option value="Bronze Builder">Bronze Builder</option>
+								<option value="Silver Contributor">Silver Contributor
+								</option>
+								<option value="Gold Architect">Gold Architect</option>
+							</select>
+						</div>
+					</div>
+
+					<div class="gen-controls">
+						<div class="control-group">
+							<label>Participants</label>
+							<textarea id="participantsInput" class="gen-textarea" rows="10"
+								placeholder="Name, Email&#10;Alex Rivera, alex@example.com&#10;Elena Rostova, elena@example.com&#10;Marcus Vance, marcus@example.com"></textarea>
+							<p class="hint">One per line. Format: <code>Name, Email</code>.
+								Email is optional.</p>
+						</div>
+						<div class="participant-stats" id="participantStats">0 participants
+							ready</div>
+					</div>
+				</div>
+			</section>
+
+			<!-- STEP 3: Generate -->
+			<section class="gen-section">
+				<div class="gen-section-header">
+					<span class="gen-step-num">3</span>
+					<div>
+						<h2>Generate & Send</h2>
+						<p>Generate certificates, save to Supabase, and email attendees.</p>
+					</div>
+				</div>
+
+				<div class="gen-actions-bar">
+					<button id="generateBtn" class="gen-btn-primary" type="button">
+						<svg viewBox="0 0 24 24" fill="currentColor"
+							style="width:16px;height:16px;">
+							<path
+								d="M19 9h-1V4H6v5H5c-1.66 0-3 1.34-3 3v6h4v4h12v-4h4v-6c0-1.66-1.34-3-3-3zM8 6h8v3H8V6zm8 14H8v-4h8v4zm2-4v-2H6v2H4v-4c0-.55.45-1 1-1h14c.55 0 1 .45 1 1v4h-2z" />
+						</svg>
+						Generate All Certificates
+					</button>
+					<button id="downloadZipBtn" class="action-btn secondary hidden" type="button">
+						<svg viewBox="0 0 24 24" fill="currentColor"
+							style="width:16px;height:16px;">
+							<path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z" />
+						</svg>
+						Download All as ZIP
+					</button>
+				</div>
+
+				<div class="progress-area hidden" id="progressArea">
+					<div class="progress-bar">
+						<div class="progress-fill" id="progressFill"></div>
+					</div>
+					<div class="progress-text" id="progressText">Initializing...</div>
+				</div>
+
+				<div class="results-area hidden" id="resultsArea">
+					<table class="results-table">
+						<thead>
+							<tr>
+								<th>Cert ID</th>
+								<th>Name</th>
+								<th>Email</th>
+								<th>Supabase</th>
+								<th>Image</th>
+								<th>Email</th>
+								<th>Action</th>
+							</tr>
+						</thead>
+						<tbody id="resultsBody"></tbody>
+					</table>
+				</div>
+			</section>
+
+		</div>
+	</main>
+
+	<footer class="site-footer gen-footer">
+		<p>© 2025 Coding Club. Certificate Generator & Verification Portal.</p>
+	</footer>
+
+	<!-- Libraries -->
+	<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+	<script src="generator.js"></script>
+</body>
+
+</html>
