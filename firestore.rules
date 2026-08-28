@@ -1,0 +1,58 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Default deny all
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isAuthorizedAdmin() {
+      return isSignedIn() && (
+        request.auth.token.email in [
+          'ysnhun412@gmail.com',
+          'dcodeclub.ssiems@gmail.com',
+          'admin@dcode.club',
+          'asif@dcode.club'
+        ] || 
+        request.auth.token.email.matches('.*@dcode\\.club$')
+      );
+    }
+
+    function isValidId(id) {
+      return id is string && id.size() > 0 && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    function isValidCertificate(data) {
+      return data.certId is string && data.certId.size() > 0 && data.certId.size() <= 64 &&
+             data.name is string && data.name.size() > 0 && data.name.size() <= 100 &&
+             data.event is string && data.event.size() > 0 && data.event.size() <= 200 &&
+             data.date is string && data.date.size() > 0 && data.date.size() <= 50 &&
+             data.issuer is string && data.issuer.size() > 0 && data.issuer.size() <= 100 &&
+             data.checksum is string && data.checksum.size() > 0 && data.checksum.size() <= 64 &&
+             data.createdBy is string && data.createdBy == request.auth.uid;
+    }
+
+    // Public read for certificate verification; Only cryptographically verified admin write
+    match /certificates/{certId} {
+      allow get: if isValidId(certId);
+      allow list: if isAuthorizedAdmin();
+      allow create: if isAuthorizedAdmin() && isValidId(certId) && isValidCertificate(request.resource.data);
+      allow update: if isAuthorizedAdmin() && isValidId(certId) && isValidCertificate(request.resource.data) &&
+                      request.resource.data.createdBy == resource.data.createdBy;
+      allow delete: if isAuthorizedAdmin() && isValidId(certId) && resource.data.createdBy == request.auth.uid;
+    }
+
+    // Admin profiles
+    match /admins/{uid} {
+      allow get: if isAuthorizedAdmin() && (request.auth.uid == uid);
+      allow create, update: if isAuthorizedAdmin() && request.auth.uid == uid &&
+                               request.resource.data.uid == request.auth.uid;
+      allow delete: if false;
+    }
+  }
+}

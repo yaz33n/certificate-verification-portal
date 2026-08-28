@@ -1,0 +1,107 @@
+{
+  "entities": {
+    "Certificate": {
+      "title": "Certificate",
+      "description": "Issued certificate record verified on DCODE Portal",
+      "type": "object",
+      "properties": {
+        "certId": {
+          "type": "string",
+          "description": "Unique identifier for the certificate",
+          "pattern": "^[a-zA-Z0-9_\\-]+$",
+          "maxLength": 64
+        },
+        "name": {
+          "type": "string",
+          "description": "Recipient full name",
+          "maxLength": 100
+        },
+        "event": {
+          "type": "string",
+          "description": "Event or workshop title",
+          "maxLength": 200
+        },
+        "date": {
+          "type": "string",
+          "description": "Issuing date string",
+          "maxLength": 50
+        },
+        "issuer": {
+          "type": "string",
+          "description": "Name of issuing authority",
+          "maxLength": 100
+        },
+        "role": {
+          "type": "string",
+          "description": "Role or credential type (e.g. Participant, Speaker, Winner)",
+          "maxLength": 50
+        },
+        "checksum": {
+          "type": "string",
+          "description": "SHA-256 cryptographic signature",
+          "maxLength": 64
+        },
+        "createdBy": {
+          "type": "string",
+          "description": "UID of the admin/organizer who generated this certificate",
+          "maxLength": 128
+        },
+        "creatorEmail": {
+          "type": "string",
+          "description": "Email of the admin/organizer who created this certificate",
+          "maxLength": 128
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "ISO timestamp of certificate generation",
+          "maxLength": 50
+        }
+      },
+      "required": ["certId", "name", "event", "date", "issuer", "checksum", "createdBy"]
+    },
+    "AdminProfile": {
+      "title": "AdminProfile",
+      "description": "Administrator / Organizer profile authorized to issue certificates",
+      "type": "object",
+      "properties": {
+        "uid": {
+          "type": "string",
+          "description": "User ID matching request.auth.uid",
+          "pattern": "^[a-zA-Z0-9_\\-]+$",
+          "maxLength": 128
+        },
+        "email": {
+          "type": "string",
+          "description": "Admin email",
+          "maxLength": 128
+        },
+        "displayName": {
+          "type": "string",
+          "description": "Display name of the admin",
+          "maxLength": 100
+        },
+        "role": {
+          "type": "string",
+          "description": "Admin role",
+          "maxLength": 50
+        },
+        "lastLoginAt": {
+          "type": "string",
+          "description": "Last sign-in timestamp",
+          "maxLength": 50
+        }
+      },
+      "required": ["uid", "email"]
+    }
+  },
+  "firestore": {
+    "/certificates/{certId}": {
+      "schema": "Certificate",
+      "description": "Master registry of verified certificates readable publicly by ID and created by authenticated admins"
+    },
+    "/admins/{uid}": {
+      "schema": "AdminProfile",
+      "description": "Authorized certificate issuers and organizers profile"
+    }
+  }
+}

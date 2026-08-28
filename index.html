@@ -4,22 +4,17 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Coding Club — Certificate Verification Portal</title>
+	<title>DCODE CLUB — Certificate Verification & Issuer Portal</title>
 	<link rel="stylesheet" href="style.css">
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
 		rel="stylesheet">
-	<base target="_blank">
 </head>
 
 <body>
 
 	<!-- ==================== HEADER ==================== -->
 	<header class="site-header">
-		<nav class="header-nav">
-			<a href="index.html" class="active">Verify</a>
-			<a href="generator.html">Generate</a>
-		</nav>
 		<div class="header-inner">
 			<div class="brand">
 				<svg class="brand-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
@@ -27,11 +22,10 @@
 				</svg>
 				<span class="brand-name">DCODE CLUB</span>
 			</div>
-			<div class="header-logos">
-				<img src="assets/logo1.png" alt="Partner Logo 1">
-				<img src="assets/logo2.png" alt="Partner Logo 2">
-				<img src="assets/logo3.png" alt="Partner Logo 3">
-			</div>
+			<nav class="header-nav">
+				<a href="index.html" class="active">Verify</a>
+				<a href="generator.html">Generate</a>
+			</nav>
 		</div>
 	</header>
 
@@ -40,49 +34,24 @@
 		<section class="hero" id="verify">
 			<div class="hero-inner">
 
-				<!-- Left scattered certificates -->
-				<aside class="scatter-side scatter-left" aria-hidden="true">
-					<div class="cert-card cert-l1" data-id="CC-2025-DEV-8492">
+				<!-- Left scattered certificates (3 dynamic certificates, ~50% visible off-screen) -->
+				<aside class="scatter-side scatter-left" id="scatterLeft" aria-label="Sample certificates left">
+					<div class="cert-card cert-l1" id="certLeft1" data-id="CC-2025-ASIF-001" title="The ASIF Talks — Live Episode #1">
 						<div class="cert-img-wrap">
-							<!-- Replace src with your real certificate image -->
-							<img src="assets/devcraft.jpg" alt="DevCraft Hackathon 2025"
-								loading="lazy">
-							<div class="cert-img-fallback">
-								<span class="cert-fallback-seal">★</span>
-								<div class="cert-fallback-lines">
-									<div class="cert-fallback-line"></div>
-									<div class="cert-fallback-line short"></div>
-								</div>
-								<span class="cert-fallback-id">CC-2025-DEV-8492</span>
-							</div>
+							<img src="" alt="The ASIF Talks Certificate" loading="eager" class="cert-canvas-img">
+							<div class="cert-card-shine"></div>
 						</div>
 					</div>
-					<div class="cert-card cert-l2" data-id="CC-2024-ALGO-1044">
+					<div class="cert-card cert-l2" id="certLeft2" data-id="CC-2026-VIBE-002" title="Vibe Coding GenAI on Google Cloud">
 						<div class="cert-img-wrap">
-							<img src="assets/cert-algo.jpg" alt="Algorithmic Design 2024"
-								loading="lazy">
-							<div class="cert-img-fallback">
-								<span class="cert-fallback-seal">★</span>
-								<div class="cert-fallback-lines">
-									<div class="cert-fallback-line"></div>
-									<div class="cert-fallback-line short"></div>
-								</div>
-								<span class="cert-fallback-id">CC-2024-ALGO-1044</span>
-							</div>
+							<img src="" alt="Vibe Coding Certificate" loading="eager" class="cert-canvas-img">
+							<div class="cert-card-shine"></div>
 						</div>
 					</div>
-					<div class="cert-card cert-l3" data-id="CC-2024-RUST-7721">
+					<div class="cert-card cert-l3" id="certLeft3" data-id="CC-2026-AGENT-003" title="Agentic AI & Multi-Agent Systems">
 						<div class="cert-img-wrap">
-							<img src="assets/cert-rust.jpg" alt="Rust Masterclass 2024"
-								loading="lazy">
-							<div class="cert-img-fallback">
-								<span class="cert-fallback-seal">★</span>
-								<div class="cert-fallback-lines">
-									<div class="cert-fallback-line"></div>
-									<div class="cert-fallback-line short"></div>
-								</div>
-								<span class="cert-fallback-id">CC-2024-RUST-7721</span>
-							</div>
+							<img src="" alt="Agentic AI Summit Certificate" loading="eager" class="cert-canvas-img">
+							<div class="cert-card-shine"></div>
 						</div>
 					</div>
 				</aside>
@@ -122,12 +91,12 @@
 
 						<div class="quick-pills">
 							<span class="pills-label">Quick test:</span>
-							<button class="pill" data-id="CC-2025-DEV-8492"
-								type="button">CC-2025-DEV-8492</button>
-							<button class="pill" data-id="CC-2024-ALGO-1044"
-								type="button">CC-2024-ALGO-1044</button>
-							<button class="pill" data-id="CC-2025-WEB3-3019"
-								type="button">CC-2025-WEB3-3019</button>
+							<button class="pill" data-id="CC-2025-ASIF-001"
+								type="button">The ASIF Talks #1</button>
+							<button class="pill" data-id="CC-2026-VIBE-002"
+								type="button">Vibe Coding GenAI</button>
+							<button class="pill" data-id="CC-2026-AGENT-003"
+								type="button">Agentic AI Summit</button>
 							<button class="pill pill--invalid" data-id="INVALID-999"
 								type="button">Invalid sample</button>
 						</div>
@@ -138,48 +107,24 @@
 					</div>
 				</div>
 
-				<!-- Right scattered certificates -->
-				<aside class="scatter-side scatter-right" aria-hidden="true">
-					<div class="cert-card cert-r1" data-id="CC-2025-WEB3-3019">
+				<!-- Right scattered certificates (3 dynamic certificates, ~50% visible off-screen) -->
+				<aside class="scatter-side scatter-right" id="scatterRight" aria-label="Sample certificates right">
+					<div class="cert-card cert-r1" id="certRight1" data-id="CC-2026-ZKSEC-004" title="Zero-Knowledge Cryptography & Web3 Security">
 						<div class="cert-img-wrap">
-							<img src="assets/cert-web3.jpg" alt="Web3 Security 2025"
-								loading="lazy">
-							<div class="cert-img-fallback">
-								<span class="cert-fallback-seal">★</span>
-								<div class="cert-fallback-lines">
-									<div class="cert-fallback-line"></div>
-									<div class="cert-fallback-line short"></div>
-								</div>
-								<span class="cert-fallback-id">CC-2025-WEB3-3019</span>
-							</div>
+							<img src="" alt="ZK Cryptography Certificate" loading="eager" class="cert-canvas-img">
+							<div class="cert-card-shine"></div>
 						</div>
 					</div>
-					<div class="cert-card cert-r2" data-id="CC-2025-AI-9012">
+					<div class="cert-card cert-r2" id="certRight2" data-id="CC-2026-KUBE-005" title="Cloud Native Platform Engineering">
 						<div class="cert-img-wrap">
-							<img src="assets/cert-ai.jpg" alt="AI Sprint 2025"
-								loading="lazy">
-							<div class="cert-img-fallback">
-								<span class="cert-fallback-seal">★</span>
-								<div class="cert-fallback-lines">
-									<div class="cert-fallback-line"></div>
-									<div class="cert-fallback-line short"></div>
-								</div>
-								<span class="cert-fallback-id">CC-2025-AI-9012</span>
-							</div>
+							<img src="" alt="Cloud Native Kubernetes Certificate" loading="eager" class="cert-canvas-img">
+							<div class="cert-card-shine"></div>
 						</div>
 					</div>
-					<div class="cert-card cert-r3" data-id="CC-2024-OSS-4433">
+					<div class="cert-card cert-r3" id="certRight3" data-id="CC-2026-QUANT-006" title="Quantum Computing Masterclass">
 						<div class="cert-img-wrap">
-							<img src="assets/cert-oss.jpg" alt="Open Source Fellowship 2024"
-								loading="lazy">
-							<div class="cert-img-fallback">
-								<span class="cert-fallback-seal">★</span>
-								<div class="cert-fallback-lines">
-									<div class="cert-fallback-line"></div>
-									<div class="cert-fallback-line short"></div>
-								</div>
-								<span class="cert-fallback-id">CC-2024-OSS-4433</span>
-							</div>
+							<img src="" alt="Quantum Computing Certificate" loading="eager" class="cert-canvas-img">
+							<div class="cert-card-shine"></div>
 						</div>
 					</div>
 				</aside>

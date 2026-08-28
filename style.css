@@ -71,6 +71,7 @@ body {
 	line-height: 1.6;
 	color: var(--text-primary);
 	background: var(--bg-canvas);
+	overflow-x: hidden;
 }
 
 img {
@@ -178,18 +179,18 @@ a:hover {
 /* ---------- Hero Section ---------- */
 .hero {
 	position: relative;
-	padding: 48px 24px 64px;
+	padding: 40px 24px 80px;
 	overflow: hidden;
 }
 
 .hero-inner {
-	max-width: 1200px;
+	max-width: 1240px;
 	margin: 0 auto;
 	position: relative;
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	min-height: 560px;
+	min-height: 820px;
 }
 
 /* ---------- Scattered Certificates ---------- */
@@ -197,157 +198,157 @@ a:hover {
 	position: absolute;
 	top: 0;
 	bottom: 0;
-	width: 300px;
+	width: 360px;
 	pointer-events: none;
+	z-index: 10;
+	will-change: transform;
+	transition: transform 0.08s ease-out;
 }
 
 .scatter-left {
 	left: 0;
+	transform: translateX(var(--scatter-scroll-left, 0px));
 }
 
 .scatter-right {
 	right: 0;
+	transform: translateX(var(--scatter-scroll-right, 0px));
 }
 
 .cert-card {
 	position: absolute;
-	width: 450px;
-	height: 285px;
-	border-radius: var(--radius-md);
-	background: var(--bg-card);
-	border: 1px solid var(--border);
-	box-shadow: var(--shadow-lg);
+	width: 520px;
+	height: 334px;
+	border-radius: 12px;
+	background: #ffffff;
+	border: 1px solid rgba(203, 213, 225, 0.85);
+	box-shadow: 0 18px 42px -10px rgba(15, 23, 42, 0.2), 0 4px 14px -2px rgba(15, 23, 42, 0.08);
 	overflow: hidden;
 	cursor: pointer;
 	pointer-events: auto;
-	transition: transform var(--transition-normal), box-shadow var(--transition-normal);
+	transition: box-shadow 0.25s ease, border-color 0.25s ease;
+	will-change: transform;
 }
 
-/*.cert-card:hover {
-	transform: translateY(-6px) scale(1.04) !important;
-	box-shadow: var(--shadow-xl);
-	z-index: 10;
+.cert-card:active {
+	transform: scale(0.99);
 }
 
-/* Left side positions & fan-out animation */
+/* Natural Vertical Distribution Covering Whole Side Space */
+/* Left side positions */
 .cert-l1 {
-	top: 10px;
-	left: -145px;
-	transform: rotate(-14deg);
-	animation: fanoutLeft1 0.85s var(--transition-slow) forwards;
+	top: 15px;
+	left: -190px;
+	transform: rotate(-10deg);
+	animation: enterScatterLeft1 1.05s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 	z-index: 2;
 }
 
 .cert-l2 {
-	top: 180px;
-	left: -125px;
-	transform: rotate(9deg);
-	animation: fanoutLeft2 0.95s var(--transition-slow) 0.06s forwards;
+	top: 250px;
+	left: -150px;
+	transform: rotate(7deg);
+	animation: enterScatterLeft2 1.15s cubic-bezier(0.16, 1, 0.3, 1) 0.08s forwards;
 	z-index: 3;
 }
 
 .cert-l3 {
-	top: 360px;
-	left: -155px;
-	transform: rotate(-7deg);
-	animation: fanoutLeft3 1.05s var(--transition-slow) 0.12s forwards;
+	top: 485px;
+	left: -210px;
+	transform: rotate(-8deg);
+	animation: enterScatterLeft3 1.25s cubic-bezier(0.16, 1, 0.3, 1) 0.15s forwards;
 	z-index: 1;
 }
 
-/* Right side positions & fan-out animation */
+/* Right side positions */
 .cert-r1 {
 	top: 25px;
-	right: -135px;
-	transform: rotate(12deg);
-	animation: fanoutRight1 0.85s var(--transition-slow) forwards;
+	right: -190px;
+	transform: rotate(9deg);
+	animation: enterScatterRight1 1.05s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 	z-index: 2;
 }
 
 .cert-r2 {
-	top: 200px;
+	top: 260px;
 	right: -150px;
-	transform: rotate(-10deg);
-	animation: fanoutRight2 0.95s var(--transition-slow) 0.06s forwards;
+	transform: rotate(-6deg);
+	animation: enterScatterRight2 1.15s cubic-bezier(0.16, 1, 0.3, 1) 0.08s forwards;
 	z-index: 3;
 }
 
 .cert-r3 {
-	top: 300px;
-	right: -120px;
-	transform: rotate(8deg);
-	animation: fanoutRight3 1.05s var(--transition-slow) 0.12s forwards;
+	top: 495px;
+	right: -210px;
+	transform: rotate(11deg);
+	animation: enterScatterRight3 1.25s cubic-bezier(0.16, 1, 0.3, 1) 0.15s forwards;
 	z-index: 1;
 }
 
-@keyframes fanoutLeft1 {
-	from {
-		left: 50%;
-		transform: rotate(0deg) translateX(-50%);
+/* On-load entrance animations: slide smoothly inward towards center */
+@keyframes enterScatterLeft1 {
+	0% {
 		opacity: 0;
+		transform: translateX(-160px) rotate(-22deg);
 	}
-
-	to {
+	100% {
 		opacity: 1;
+		transform: translateX(0) rotate(-10deg);
 	}
 }
 
-@keyframes fanoutLeft2 {
-	from {
-		left: 50%;
-		transform: rotate(0deg) translateX(-50%);
+@keyframes enterScatterLeft2 {
+	0% {
 		opacity: 0;
+		transform: translateX(-180px) rotate(-5deg);
 	}
-
-	to {
+	100% {
 		opacity: 1;
+		transform: translateX(0) rotate(7deg);
 	}
 }
 
-@keyframes fanoutLeft3 {
-	from {
-		left: 50%;
-		transform: rotate(0deg) translateX(-50%);
+@keyframes enterScatterLeft3 {
+	0% {
 		opacity: 0;
+		transform: translateX(-160px) rotate(-18deg);
 	}
-
-	to {
+	100% {
 		opacity: 1;
+		transform: translateX(0) rotate(-8deg);
 	}
 }
 
-@keyframes fanoutRight1 {
-	from {
-		right: 50%;
-		transform: rotate(0deg) translateX(50%);
+@keyframes enterScatterRight1 {
+	0% {
 		opacity: 0;
+		transform: translateX(160px) rotate(22deg);
 	}
-
-	to {
+	100% {
 		opacity: 1;
+		transform: translateX(0) rotate(9deg);
 	}
 }
 
-@keyframes fanoutRight2 {
-	from {
-		right: 50%;
-		transform: rotate(0deg) translateX(50%);
+@keyframes enterScatterRight2 {
+	0% {
 		opacity: 0;
+		transform: translateX(180px) rotate(5deg);
 	}
-
-	to {
+	100% {
 		opacity: 1;
+		transform: translateX(0) rotate(-6deg);
 	}
 }
 
-@keyframes fanoutRight3 {
-	from {
-		right: 50%;
-		transform: rotate(0deg) translateX(50%);
+@keyframes enterScatterRight3 {
+	0% {
 		opacity: 0;
+		transform: translateX(160px) rotate(20deg);
 	}
-
-	to {
+	100% {
 		opacity: 1;
+		transform: translateX(0) rotate(11deg);
 	}
 }
 
@@ -356,19 +357,22 @@ a:hover {
 	position: relative;
 	width: 100%;
 	height: 100%;
-	background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+	background: #ffffff;
 }
 
 .cert-img-wrap img {
 	width: 100%;
 	height: 100%;
 	object-fit: cover;
-	opacity: 0;
-	transition: opacity 0.3s ease;
+	opacity: 1;
+	display: block;
 }
 
-.cert-img-wrap img[src]:not([src=""]) {
-	opacity: 1;
+.cert-card-shine {
+	position: absolute;
+	inset: 0;
+	pointer-events: none;
+	background: linear-gradient(135deg, rgba(255, 255, 255, 0.35) 0%, rgba(255, 255, 255, 0) 50%, rgba(0, 0, 0, 0.04) 100%);
 }
 
 /* Fallback when image not loaded yet */
@@ -921,6 +925,22 @@ a:hover {
 }
 
 /* ---------- Responsive ---------- */
+@media (min-width: 1025px) and (max-width: 1280px) {
+	.hero-inner {
+		min-height: 780px;
+	}
+	.cert-card {
+		width: 440px;
+		height: 282px;
+	}
+	.cert-l1 { left: -170px; top: 20px; }
+	.cert-l2 { left: -140px; top: 240px; }
+	.cert-l3 { left: -180px; top: 465px; }
+	.cert-r1 { right: -170px; top: 25px; }
+	.cert-r2 { right: -140px; top: 250px; }
+	.cert-r3 { right: -180px; top: 475px; }
+}
+
 @media (max-width: 1024px) {
 	.scatter-side {
 		display: none;

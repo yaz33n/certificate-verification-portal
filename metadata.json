@@ -1,0 +1,6 @@
+{
+  "name": "Certificate Verification Portal",
+  "description": "A certificate verification and generation portal featuring cryptographic verification, offline demo registry, and live canvas-based certificate generation.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
