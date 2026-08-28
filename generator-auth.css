@@ -22,6 +22,7 @@
 }
 
 .auth-gate-card {
+	position: relative;
 	background: #ffffff;
 	border-radius: 16px;
 	width: 100%;
@@ -30,6 +31,38 @@
 	box-shadow: 0 25px 50px -12px rgba(15, 23, 42, 0.35), 0 0 0 1px rgba(226, 232, 240, 0.8);
 	text-align: center;
 	animation: authCardEnter 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Close Button in Modal Top-Right */
+.auth-card-close-btn {
+	position: absolute;
+	top: 16px;
+	right: 16px;
+	width: 32px;
+	height: 32px;
+	border-radius: 8px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	color: #64748b;
+	background: #f1f5f9;
+	border: 1px solid #e2e8f0;
+	cursor: pointer;
+	text-decoration: none;
+	transition: all 0.15s ease;
+	z-index: 10;
+}
+
+.auth-card-close-btn:hover {
+	color: #0f172a;
+	background: #e2e8f0;
+	border-color: #cbd5e1;
+	transform: scale(1.05);
+}
+
+.auth-card-close-btn svg {
+	width: 16px;
+	height: 16px;
 }
 
 @keyframes authCardEnter {
@@ -233,6 +266,32 @@
 	color: #94a3b8;
 	text-align: center;
 	line-height: 1.4;
+}
+
+.auth-cancel-row {
+	margin-top: 16px;
+	padding-top: 14px;
+	border-top: 1px solid #f1f5f9;
+	display: flex;
+	justify-content: center;
+}
+
+.auth-cancel-link {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	font-size: 12px;
+	font-weight: 500;
+	color: #64748b;
+	text-decoration: none;
+	padding: 6px 12px;
+	border-radius: 6px;
+	transition: all 0.15s ease;
+}
+
+.auth-cancel-link:hover {
+	color: #2563eb;
+	background: #eff6ff;
 }
 
 .auth-error-msg {
