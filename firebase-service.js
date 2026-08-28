@@ -45,9 +45,11 @@ googleProvider.setCustomParameters({ prompt: 'select_account' });
  */
 export const AUTHORIZED_EMAILS = [
   'ysnhun412@gmail.com',         // Primary administrator (your account)
+   'sanjivani.jadhav.cs@gmail.com',         // Primary administrator (your account)
+
   'dcodeclub.ssiems@gmail.com',  // Official club email
-  'admin@dcode.club',            // Main Admin ID
-  'asif@dcode.club',             // Organizer / President
+  'syedasif111005@gmail.com',        // President,
+  
 ];
 
 export const AUTHORIZED_DOMAINS = [
