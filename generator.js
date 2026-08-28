@@ -10,6 +10,11 @@ import {
   testFirestoreConnection, 
   db 
 } from './firebase-service.js';
+import { 
+  authenticateAdmin, 
+  getCurrentSession, 
+  clearSession 
+} from './auth-service.js';
 import { doc, setDoc } from 'https://www.gstatic.com/firebasejs/11.4.0/firebase-firestore.js';
 
 // ==================== CONFIG & STATE ====================
@@ -42,6 +47,9 @@ const state = {
 const authEls = {
 	overlay: document.getElementById('authGateOverlay'),
 	googleBtn: document.getElementById('googleAuthBtn'),
+	loginForm: document.getElementById('adminLoginForm'),
+	idInput: document.getElementById('adminIdInput'),
+	passwordInput: document.getElementById('adminPasswordInput'),
 	errorMsg: document.getElementById('authErrorMsg'),
 	protectedContent: document.getElementById('generatorProtectedContent'),
 	headerControls: document.getElementById('headerAuthControls'),
@@ -91,12 +99,20 @@ const els = {
 function initAuth() {
 	testFirestoreConnection();
 
+	// Check existing custom admin session
+	const existingSession = getCurrentSession();
+	if (existingSession) {
+		state.currentUser = existingSession;
+		renderAuthenticatedUI(existingSession);
+	}
+
 	// Firebase Google Auth state change listener
 	subscribeToAuth((user) => {
-		state.currentUser = user;
 		if (user) {
+			state.currentUser = user;
 			renderAuthenticatedUI(user);
-		} else {
+		} else if (!getCurrentSession()) {
+			state.currentUser = null;
 			renderUnauthenticatedUI();
 		}
 	});
@@ -116,9 +132,29 @@ function initAuth() {
 		});
 	}
 
+	// Admin ID & Password login form
+	if (authEls.loginForm) {
+		authEls.loginForm.addEventListener('submit', async (e) => {
+			e.preventDefault();
+			hideAuthError();
+			const adminId = authEls.idInput ? authEls.idInput.value.trim() : '';
+			const password = authEls.passwordInput ? authEls.passwordInput.value : '';
+
+			const res = await authenticateAdmin(adminId, password);
+			if (res.success) {
+				state.currentUser = res.user;
+				renderAuthenticatedUI(res.user);
+				showToast(`Welcome back, ${res.user.name}!`);
+			} else {
+				showAuthError(res.error || 'Invalid login credentials.');
+			}
+		});
+	}
+
 	// Sign out action
 	if (authEls.sessionSignOutBtn) {
 		authEls.sessionSignOutBtn.addEventListener('click', async () => {
+			clearSession();
 			await logoutUser();
 			state.currentUser = null;
 			renderUnauthenticatedUI();
@@ -135,12 +171,12 @@ function renderAuthenticatedUI(user) {
 		authEls.protectedContent.style.display = 'block';
 	}
 
-	const displayName = user.displayName || user.email.split('@')[0];
-	const initials = displayName.substring(0, 2).toUpperCase();
+	const displayName = user.displayName || user.name || (user.email ? user.email.split('@')[0] : 'Admin');
+	const initials = displayName.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase() || 'AD';
 
 	if (authEls.sessionAvatar) authEls.sessionAvatar.textContent = initials;
 	if (authEls.sessionName) authEls.sessionName.textContent = displayName;
-	if (authEls.sessionRole) authEls.sessionRole.textContent = `${user.email} • Authorized Certificate Issuer`;
+	if (authEls.sessionRole) authEls.sessionRole.textContent = `${user.email || 'Admin'} • Authorized Certificate Issuer`;
 
 	if (authEls.headerControls) {
 		authEls.headerControls.innerHTML = `
