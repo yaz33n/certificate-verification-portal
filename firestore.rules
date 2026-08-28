@@ -16,8 +16,8 @@ service cloud.firestore {
         request.auth.token.email in [
           'ysnhun412@gmail.com',
           'dcodeclub.ssiems@gmail.com',
-          'admin@dcode.club',
-          'asif@dcode.club'
+          'sanjivani.jadhav.cs@gmail.com',
+          'syedasif111005@gmail.com',
         ] || 
         request.auth.token.email.matches('.*@dcode\\.club$')
       );
