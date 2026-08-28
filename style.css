@@ -144,10 +144,44 @@ a:hover {
 .brand {
 	display: flex;
 	align-items: center;
-	gap: 10px;
-	font-weight: 600;
+	gap: 12px;
+	font-weight: 700;
 	font-size: 16px;
 	color: var(--text-primary);
+	text-decoration: none;
+}
+
+.brand-logo-img {
+	height: 38px;
+	width: auto;
+	max-width: 120px;
+	object-fit: contain;
+	display: block;
+}
+
+.header-right-group {
+	display: flex;
+	align-items: center;
+	gap: 20px;
+}
+
+.institution-badge {
+	display: flex;
+	align-items: center;
+	padding: 3px;
+	background: #ffffff;
+	border: 1px solid var(--border);
+	border-radius: 50%;
+	box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+	text-decoration: none;
+}
+
+.ssiems-logo-img {
+	height: 36px;
+	width: 36px;
+	object-fit: contain;
+	border-radius: 50%;
+	display: block;
 }
 
 .brand-icon {

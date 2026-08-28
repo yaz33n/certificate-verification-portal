@@ -183,111 +183,153 @@ function hideAuthError() {
 }
 
 // ==================== DEFAULT CERTIFICATE TEMPLATE ====================
-function createDefaultCertificateTemplate() {
+function createDefaultCertificateTemplate(callback) {
 	const canvas = document.createElement('canvas');
 	canvas.width = 1920;
 	canvas.height = 1350;
 	const ctx = canvas.getContext('2d');
 
-	// Background parchment gradient
-	const bgGradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
-	bgGradient.addColorStop(0, '#ffffff');
-	bgGradient.addColorStop(1, '#f8fafc');
-	ctx.fillStyle = bgGradient;
-	ctx.fillRect(0, 0, canvas.width, canvas.height);
+	// Load images for template
+	const dcodeImg = new Image();
+	const ssiemsImg = new Image();
+	dcodeImg.src = 'Dcode-Logo.png';
+	ssiemsImg.src = 'ssiems-logo.webp';
 
-	// Outer borders
-	ctx.strokeStyle = '#cbd5e1';
-	ctx.lineWidth = 3;
-	ctx.strokeRect(40, 40, canvas.width - 80, canvas.height - 80);
+	let loadedCount = 0;
+	const onImgLoaded = () => {
+		loadedCount++;
+		if (loadedCount === 2) {
+			drawCanvas();
+		}
+	};
+	dcodeImg.onload = onImgLoaded;
+	ssiemsImg.onload = onImgLoaded;
+	dcodeImg.onerror = onImgLoaded;
+	ssiemsImg.onerror = onImgLoaded;
 
-	ctx.strokeStyle = '#2563eb';
-	ctx.lineWidth = 6;
-	ctx.strokeRect(60, 60, canvas.width - 120, canvas.height - 120);
+	function drawCanvas() {
+		// Background parchment gradient
+		const bgGradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
+		bgGradient.addColorStop(0, '#ffffff');
+		bgGradient.addColorStop(1, '#f8fafc');
+		ctx.fillStyle = bgGradient;
+		ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-	ctx.strokeStyle = '#d97706';
-	ctx.lineWidth = 2;
-	ctx.strokeRect(76, 76, canvas.width - 152, canvas.height - 152);
+		// Outer borders
+		ctx.strokeStyle = '#cbd5e1';
+		ctx.lineWidth = 3;
+		ctx.strokeRect(40, 40, canvas.width - 80, canvas.height - 80);
 
-	// Corner ornaments
-	const corners = [
-		[60, 60],
-		[canvas.width - 60, 60],
-		[60, canvas.height - 60],
-		[canvas.width - 60, canvas.height - 60]
-	];
-	corners.forEach(([cx, cy]) => {
+		ctx.strokeStyle = '#2563eb';
+		ctx.lineWidth = 6;
+		ctx.strokeRect(60, 60, canvas.width - 120, canvas.height - 120);
+
+		ctx.strokeStyle = '#d97706';
+		ctx.lineWidth = 2;
+		ctx.strokeRect(76, 76, canvas.width - 152, canvas.height - 152);
+
+		// Corner ornaments
+		const corners = [
+			[60, 60],
+			[canvas.width - 60, 60],
+			[60, canvas.height - 60],
+			[canvas.width - 60, canvas.height - 60]
+		];
+		corners.forEach(([cx, cy]) => {
+			ctx.fillStyle = '#2563eb';
+			ctx.beginPath();
+			ctx.arc(cx, cy, 14, 0, Math.PI * 2);
+			ctx.fill();
+			ctx.fillStyle = '#d97706';
+			ctx.beginPath();
+			ctx.arc(cx, cy, 7, 0, Math.PI * 2);
+			ctx.fill();
+		});
+
+		// Top Left: DCODE Logo
+		try {
+			if (dcodeImg.complete && dcodeImg.naturalWidth > 0) {
+				const dW = 160;
+				const dH = (dcodeImg.naturalHeight / dcodeImg.naturalWidth) * dW;
+				ctx.drawImage(dcodeImg, 120, 110, dW, dH);
+			}
+		} catch (e) {
+			console.warn('Could not render Dcode logo on canvas', e);
+		}
+
+		// Top Right: SSIEMS Logo
+		try {
+			if (ssiemsImg.complete && ssiemsImg.naturalWidth > 0) {
+				const sSize = 140;
+				ctx.drawImage(ssiemsImg, canvas.width - 120 - sSize, 110, sSize, sSize);
+			}
+		} catch (e) {
+			console.warn('Could not render SSIEMS logo on canvas', e);
+		}
+
+		// Header & Titles
+		ctx.fillStyle = '#1e1b4b';
+		ctx.font = '700 28px Inter, sans-serif';
+		ctx.textAlign = 'center';
+		ctx.fillText('DCODE CLUB', canvas.width / 2, 170);
+
 		ctx.fillStyle = '#2563eb';
+		ctx.font = '700 48px Inter, sans-serif';
+		ctx.letterSpacing = '4px';
+		ctx.fillText('CERTIFICATE OF ACCOMPLISHMENT', canvas.width / 2, 260);
+
+		ctx.fillStyle = '#64748b';
+		ctx.font = '500 22px Inter, sans-serif';
+		ctx.letterSpacing = '1px';
+		ctx.fillText('THIS CERTIFICATE IS PROUDLY PRESENTED TO', canvas.width / 2, 360);
+
+		// Line for recipient
+		ctx.strokeStyle = '#e2e8f0';
+		ctx.lineWidth = 2;
 		ctx.beginPath();
-		ctx.arc(cx, cy, 14, 0, Math.PI * 2);
-		ctx.fill();
+		ctx.moveTo(canvas.width / 2 - 350, 700);
+		ctx.lineTo(canvas.width / 2 + 350, 700);
+		ctx.stroke();
+
+		ctx.fillStyle = '#64748b';
+		ctx.font = '500 20px Inter, sans-serif';
+		ctx.fillText('FOR ACTIVE PARTICIPATION AND SUCCESSFUL COMPLETION OF', canvas.width / 2, 770);
+
+		// Issuer and Verification footer labels
+		ctx.fillStyle = '#475569';
+		ctx.font = '600 18px Inter, sans-serif';
+		ctx.textAlign = 'left';
+		ctx.fillText('ISSUED BY: DCODE CLUB HQ & SSIEMS', 120, 1140);
+		ctx.fillStyle = '#94a3b8';
+		ctx.font = '500 15px JetBrains Mono, monospace';
+		ctx.fillText('CRYPTOGRAPHICALLY SECURED VIA SHA-256', 120, 1175);
+
+		// Seal badge
 		ctx.fillStyle = '#d97706';
 		ctx.beginPath();
-		ctx.arc(cx, cy, 7, 0, Math.PI * 2);
+		ctx.arc(canvas.width / 2, 1150, 48, 0, Math.PI * 2);
 		ctx.fill();
-	});
+		ctx.fillStyle = '#ffffff';
+		ctx.font = '700 32px Inter, sans-serif';
+		ctx.textAlign = 'center';
+		ctx.fillText('★', canvas.width / 2, 1162);
 
-	// Header & Emblem
-	ctx.fillStyle = '#1e1b4b';
-	ctx.font = '700 28px Inter, sans-serif';
-	ctx.textAlign = 'center';
-	ctx.fillText('DCODE CLUB', canvas.width / 2, 170);
-
-	ctx.fillStyle = '#2563eb';
-	ctx.font = '700 48px Inter, sans-serif';
-	ctx.letterSpacing = '4px';
-	ctx.fillText('CERTIFICATE OF ACCOMPLISHMENT', canvas.width / 2, 260);
-
-	ctx.fillStyle = '#64748b';
-	ctx.font = '500 22px Inter, sans-serif';
-	ctx.letterSpacing = '1px';
-	ctx.fillText('THIS CERTIFICATE IS PROUDLY PRESENTED TO', canvas.width / 2, 360);
-
-	// Line for recipient
-	ctx.strokeStyle = '#e2e8f0';
-	ctx.lineWidth = 2;
-	ctx.beginPath();
-	ctx.moveTo(canvas.width / 2 - 350, 700);
-	ctx.lineTo(canvas.width / 2 + 350, 700);
-	ctx.stroke();
-
-	ctx.fillStyle = '#64748b';
-	ctx.font = '500 20px Inter, sans-serif';
-	ctx.fillText('FOR ACTIVE PARTICIPATION AND SUCCESSFUL COMPLETION OF', canvas.width / 2, 770);
-
-	// Issuer and Verification footer labels
-	ctx.fillStyle = '#475569';
-	ctx.font = '600 18px Inter, sans-serif';
-	ctx.textAlign = 'left';
-	ctx.fillText('ISSUED BY: DCODE CLUB HQ', 120, 1140);
-	ctx.fillStyle = '#94a3b8';
-	ctx.font = '500 15px JetBrains Mono, monospace';
-	ctx.fillText('CRYPTOGRAPHICALLY SECURED VIA SHA-256', 120, 1175);
-
-	// Seal badge
-	ctx.fillStyle = '#d97706';
-	ctx.beginPath();
-	ctx.arc(canvas.width / 2, 1150, 48, 0, Math.PI * 2);
-	ctx.fill();
-	ctx.fillStyle = '#ffffff';
-	ctx.font = '700 32px Inter, sans-serif';
-	ctx.textAlign = 'center';
-	ctx.fillText('★', canvas.width / 2, 1162);
-
-	const img = new Image();
-	img.src = canvas.toDataURL('image/png');
-	return img;
+		const img = new Image();
+		img.onload = () => {
+			if (callback) callback(img);
+		};
+		img.src = canvas.toDataURL('image/png');
+	}
 }
 
 // ==================== INITIALIZE STATE & PREVIEW ====================
 function init() {
 	initAuth();
 
-	const defaultImg = createDefaultCertificateTemplate();
-	defaultImg.onload = () => {
-		state.templateImage = defaultImg;
+	createDefaultCertificateTemplate((templateImg) => {
+		state.templateImage = templateImg;
 		renderPreview();
-	};
+	});
 
 	if (els.participantsInput && !els.participantsInput.value.trim()) {
 		els.participantsInput.value = `Alex Rivera, alex@example.com\nElena Rostova, elena@example.com\nMarcus Vance, marcus@example.com\nSiddharth Rao, siddharth@example.com`;

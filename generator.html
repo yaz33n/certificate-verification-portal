@@ -18,18 +18,24 @@
 	<!-- Header -->
 	<header class="site-header">
 		<div class="header-inner">
-			<div class="brand">
-				<svg class="brand-icon" viewBox="0 0 24 24" fill="currentColor">
-					<path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
-				</svg>
+			<a href="index.html" class="brand" id="brandHeaderLogo">
+				<img src="Dcode-Logo.png" alt="DCODE Club Logo" class="brand-logo-img" id="dcodeHeaderLogo">
 				<span class="brand-name">DCODE CLUB</span>
-			</div>
-			<nav class="header-nav">
-				<a href="index.html">Verify</a>
-				<a href="generator.html" class="active">Generate</a>
-			</nav>
-			<div class="header-auth-controls" id="headerAuthControls">
-				<!-- Dynamically populated if logged in -->
+			</a>
+
+			<div class="header-right-group">
+				<nav class="header-nav">
+					<a href="index.html">Verify</a>
+					<a href="generator.html" class="active">Generate</a>
+				</nav>
+
+				<div class="header-auth-controls" id="headerAuthControls">
+					<!-- Dynamically populated if logged in -->
+				</div>
+
+				<div class="institution-badge" id="institutionBadge" title="Shri Shivaji Institute Of Engineering & Management Studies">
+					<img src="ssiems-logo.webp" alt="SSIEMS Logo" class="ssiems-logo-img" id="ssiemsHeaderLogo">
+				</div>
 			</div>
 		</div>
 	</header>
