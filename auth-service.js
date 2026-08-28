@@ -9,32 +9,44 @@ export const AUTHORIZED_ADMINS = [
     name: 'Yaseen Khan',
     role: 'Technical Lead & System Architect',
     email: 'ysnhun412@gmail.com',
-    // 4-word passphrase: "quantum falcon cyber vault"
-    passHash: '97c0e50bfebb439431365667ec81510e225cf2900083932665c620291562a7b0'
+    // 2-word passphrase: "cyber-falcon" (or "cyber falcon")
+    passHashes: [
+      '52d6f6c9fe7ebd0bf7fa7087f9165f0e8568ea27c1d248733078d6d0c95a580b', // cyber-falcon
+      '0748446ed995d3b9d4214b5c8fc889dbc587704f9fd94b3070042bedf7ec3d3f'  // cyber falcon
+    ]
   },
   {
     id: 'asif',
     name: 'Syed Asif',
     role: 'DCODE President & Lead Organizer',
     email: 'syedasif111005@gmail.com',
-    // 4-word passphrase: "galaxy phoenix orbit shield"
-    passHash: '1087a3d2b8e8f8c596da518fc85368032ec265fc01f187d12cdf67eebc6232f0'
+    // 2-word passphrase: "orbit-shield" (or "orbit shield")
+    passHashes: [
+      'b17c9309b82bb851403daa89e99e681a6221026e7e40e76b31f44257226081f9', // orbit-shield
+      '9731f8263d64473ab717e40cbbd22ba7c625b8b3a831711c5fd051aa6011fbb3'  // orbit shield
+    ]
   },
   {
     id: 'sanjivani',
     name: 'Sanjivani Jadhav',
     role: 'Faculty Coordinator / Co-Lead',
     email: 'sanjivani.jadhav.cs@gmail.com',
-    // 4-word passphrase: "solar blossom vertex code"
-    passHash: 'eeabd19880016ee8bc302969e2dc07358800ebce492e0a76be3a378d0b28541f'
+    // 2-word passphrase: "vertex-code" (or "vertex code")
+    passHashes: [
+      '46f63dc19b97c10d88f292713c8361872cab602c725c6f457b92d5a741c443f6', // vertex-code
+      '7d2b37b384a3437515f1ae373bee10cf09e03e8e8bdcb587cb0f3ef2fce8cef1'  // vertex code
+    ]
   },
   {
-    id: 'sanjivni', // alias support for requested spelling "sanjivni"
+    id: 'sanjivni', // alias support for spelling "sanjivni"
     name: 'Sanjivani Jadhav',
     role: 'Faculty Coordinator / Co-Lead',
     email: 'sanjivani.jadhav.cs@gmail.com',
-    // 4-word passphrase: "solar blossom vertex code"
-    passHash: 'eeabd19880016ee8bc302969e2dc07358800ebce492e0a76be3a378d0b28541f'
+    // 2-word passphrase: "vertex-code" (or "vertex code")
+    passHashes: [
+      '46f63dc19b97c10d88f292713c8361872cab602c725c6f457b92d5a741c443f6', // vertex-code
+      '7d2b37b384a3437515f1ae373bee10cf09e03e8e8bdcb587cb0f3ef2fce8cef1'  // vertex code
+    ]
   }
 ];
 
@@ -64,8 +76,12 @@ export async function authenticateAdmin(adminId, password) {
   }
 
   const hashedInput = await sha256(cleanPass);
-  if (hashedInput !== admin.passHash) {
-    return { success: false, error: 'Incorrect Password. Please try again.' };
+  const isValid = Array.isArray(admin.passHashes) 
+    ? admin.passHashes.includes(hashedInput)
+    : admin.passHash === hashedInput;
+
+  if (!isValid) {
+    return { success: false, error: 'Incorrect Passphrase. Please try again.' };
   }
 
   const sessionData = {
